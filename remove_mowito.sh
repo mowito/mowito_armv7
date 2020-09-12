@@ -29,6 +29,8 @@ pkg_names=(
     controller-executive
     recovery-executive
     global-planner
+    mw-global-planner
+    mw-maxl-planner
 )
 
 
