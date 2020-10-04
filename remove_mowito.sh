@@ -31,9 +31,6 @@ pkg_names=(
     global-planner
     mw-global-planner
     mw-maxl-planner
-    behaviortree-cpp-v3           #removing behavior tree
-    teleop-twist-keyboard         #removing teleop-twist-keyboard
-    map-server                    #removing map-server
 )
 
 
