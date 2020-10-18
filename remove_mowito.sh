@@ -31,6 +31,8 @@ pkg_names=(
     global-planner
     mw-global-planner
     mw-maxl-planner
+    behavior-tree
+    mw-navfn-planner
 )
 
 
