@@ -11,29 +11,15 @@ fi
 # create the mwoito dir
 CURR_DIR="$(dirname $(realpath $0))"
 
-if [ -d "$HOME/mowito" ] 
-then
-    echo "Directory ~/mowito exists." 
-else
-    echo "creating ~/mowito directory."
-    mkdir ~/mowito
-fi
-
-FINAL_DIR=$HOME/mowito
 echo "$CURR_DIR"
-echo "$FINAL_DIR"
 
-if [ $FINAL_DIR = $CURR_DIR ]
-then 
-    echo "Already were in Mowito directory"
-else 
-    echo "Copying the data from $CURR_DIR to $FINAL_DIR"
-    cp -r "$CURR_DIR"/. "$FINAL_DIR"
-fi
 
 echo "===================================="
-echo "Installing Mowito packages"
+echo "Installing Dependencies"
 echo "===================================="
+
+# removing costmap2d to avoid the clash
+sudo apt remove ros-${ros_version}-costmap-2d -y
 
 # installing the dependdencies
 sudo apt install ros-${ros_version}-voxel-grid -y
@@ -42,12 +28,18 @@ sudo apt install ros-${ros_version}-voxel-grid -y
 sudo apt install ros-${ros_version}-joint-state-publisher -y
 sudo apt install ros-${ros_version}-joint-state-controller -y
 
-sudo dpkg -i ~/mowito/debians/ros-${ros_version}-*.deb
+sudo apt-get install ros-${ros_version}-behaviortree-cpp-v3 -y          # installation of behavior tree
+sudo apt-get install ros-${ros_version}-teleop-twist-keyboard -y        # installation of teleop-twist-keyboard
 
-sudo apt-get install ros-${ros_version}-behaviortree-cpp-v3 -y        # installation of behavior tree
-sudo apt-get install ros-${ros_version}-teleop-twist-keyboard -y      # installation of teleop-twist-keyboard
+sudo apt-get install ros-${ros_version}-map-server -y                   # installation of map-server 
 
-sudo apt-get install ros-${ros_version}-map-server -y                 # installation of map server
+
+echo "===================================="
+echo "Installing Mowito packages"
+echo "===================================="
+
+
+sudo dpkg -i $CURR_DIR/debians/ros-${ros_version}-*.deb
 
 # registering the user
 echo ""
@@ -57,14 +49,6 @@ echo "=============================="
 source /opt/ros/${ros_version}/setup.bash
 rosrun mlicense robot_reg.py
 
-
-if [ $FINAL_DIR = $CURR_DIR ]
-then 
-    echo "Already were in Mowito directory"
-elif [ $CURR_DIR = $HOME ]
-then
-    echo "$CURR_DIR is the home directory"
-else 
-    echo "deleting the old directory of $CURR_DIR"
-    sudo rm -r  "$CURR_DIR"
-fi
+echo "=============================="
+echo "===== ROBOT SETUP DONE ======="
+echo "=============================="
