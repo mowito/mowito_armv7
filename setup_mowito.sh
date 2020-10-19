@@ -18,6 +18,8 @@ echo "===================================="
 echo "Installing Dependencies"
 echo "===================================="
 
+# removing costmap2d to avoid the clash
+sudo apt remove ros-${ros_version}-costmap-2d -y
 
 # installing the dependdencies
 sudo apt install ros-${ros_version}-voxel-grid -y
